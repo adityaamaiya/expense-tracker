@@ -1,0 +1,95 @@
+.recent {
+  height: 345px;
+  border: 1px solid #9b9b9b;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+.expenseListContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 20px;
+}
+
+.expenseItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+  max-height: 70px;
+}
+
+.expenseTitle {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.expenseIcon {
+  margin-right: 10px;
+  background: #D9D9D9;
+border-radius: 50%;
+padding: 5px;
+  width: 25px;
+  height: 25px;
+ 
+}
+
+.expenseDate {
+  color: #777;
+  font-size: 14px;
+}
+
+.expenseAmount {
+  font-size: 16px;
+  font-weight: bold;
+  color: orange;
+}
+
+.expenseActions {
+  display: flex;
+  gap: 10px;
+}
+.editIcon{
+  background-color: #F4BB4A;
+}
+
+.editIcon, .deleteIcon {
+  cursor: pointer;
+  color: #fff;
+  width: 37px;
+  height: 37px;
+  padding: 5px;
+  border-radius: 15PX;
+  box-shadow: 0px 4px 4px 0px #00000040;
+
+}
+.deleteIcon{
+  background-color: #FF3E3E;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination p {
+  margin: 0;
+}
