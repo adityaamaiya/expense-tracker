@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "./components/Cards/Card";
-import Chart from "./components/PieChart/Chart";
+import Chart from "./components/PieChart/PieChart";
 import ExpenseModal from "./components/Modals/AddExpensesModal";
 import "./App.css";
 import RecentTransactions from "./components/RecentTransactions/RecentTransactions";

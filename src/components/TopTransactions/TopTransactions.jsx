@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./TopTransactions.module.css";
-import CategoryBarChart from "../BarChart/BarChart";
+import BarChart from "../BarChart/BarChart";
 
 export default function TopTransactions({ expenses }) {
   return (
@@ -21,7 +21,7 @@ export default function TopTransactions({ expenses }) {
         Top Expenses
       </p>
       <div className={styles.top}>
-        <CategoryBarChart expenses={expenses} />
+        <BarChart expenses={expenses} />
       </div>
     </div>
   );

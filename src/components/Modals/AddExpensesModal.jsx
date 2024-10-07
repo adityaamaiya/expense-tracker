@@ -40,6 +40,7 @@ export default function ExpenseModal({
     }
     const expenseData = { title, price, date, category };
     onAddExpense(expenseData); // Call parent function to add or edit expense
+    //Resetting the data
     setTitle("");
     setPrice("");
     setDate("");

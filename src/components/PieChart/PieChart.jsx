@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import styles from "./Chart.module.css";
+import styles from "./PieChart.module.css";
 
 // Define color mapping for each category
 const categoryColors = {
