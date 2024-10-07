@@ -1,17 +1,23 @@
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #626262;
   box-shadow: 0px 4px 4px 0px #00000040;
-height: 269px;
-border-radius: 10px;
+  height: 269px;
+  border-radius: 10px;
+}
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Change to column layout on mobile */
+    align-items: flex-start; /* Align items to the start */
+    height: auto; /* Adjust height if necessary */
+    padding: 20px; /* Add padding for better spacing */
+  }
 }
 .App {
-  
- 
 }
-.chart{
+.chart {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -19,18 +25,25 @@ border-radius: 10px;
   width: 50%;
   height: 50%;
 }
-.food{
-  background-color: #A000FF;
+@media (max-width: 768px) {
+  .chart {
+    width: 100%;
+  }
+  .footer {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+.food {
+  background-color: #a000ff;
   width: 26px;
   height: 8px;
 }
-.footer{
+.footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
 }
-
 
 .App-logo {
   height: 40vmin;

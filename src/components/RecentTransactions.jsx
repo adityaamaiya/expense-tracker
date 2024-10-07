@@ -5,15 +5,24 @@ import { BsSuitcase2, BsGift } from "react-icons/bs";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { IoPizzaOutline } from "react-icons/io5";
 
-export default function RecentTransactions({ expenses, onDeleteExpense }) {
+export default function RecentTransactions({
+  expenses,
+  onDeleteExpense,
+  handleEdit,
+}) {
   const [currentPage, setCurrentPage] = useState(1);
+
+  
 
   const expensesPerPage = 3;
 
   // Pagination logic
   const indexOfLastExpense = currentPage * expensesPerPage;
   const indexOfFirstExpense = indexOfLastExpense - expensesPerPage;
-  const currentExpenses = expenses.slice(indexOfFirstExpense, indexOfLastExpense);
+  const currentExpenses = expenses.slice(
+    indexOfFirstExpense,
+    indexOfLastExpense
+  );
 
   const totalPages = Math.ceil(expenses.length / expensesPerPage);
 
@@ -36,12 +45,12 @@ export default function RecentTransactions({ expenses, onDeleteExpense }) {
 
   // Function to format date from YYYY-MM-DD to "Month DD, YYYY"
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
-    <div>
+    <div className={styles.recentDiv}>
       <p
         style={{
           color: "white",
@@ -53,7 +62,6 @@ export default function RecentTransactions({ expenses, onDeleteExpense }) {
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
-          width: "850px",
         }}
       >
         Recent Transactions
@@ -63,27 +71,37 @@ export default function RecentTransactions({ expenses, onDeleteExpense }) {
           {currentExpenses.map((expense, index) => (
             <div key={index} className={styles.expenseItem}>
               <div className={styles.expenseDetails}>
-                <p className={styles.expenseTitle}>
+                <div className={styles.expenseIcon}>
                   {expense.category === "food" ? (
-                    <IoPizzaOutline className={styles.expenseIcon} />
+                    <IoPizzaOutline />
                   ) : expense.category === "entertainment" ? (
-                    <BsGift className={styles.expenseIcon} />
+                    <BsGift />
                   ) : expense.category === "travel" ? (
-                    <BsSuitcase2 className={styles.expenseIcon} />
+                    <BsSuitcase2 />
                   ) : null}
+                </div>
 
+                <p className={styles.expenseTitle}>
                   {expense.title}
+                  <p className={styles.expenseDate}>
+                    {formatDate(expense.date)}
+                  </p>
                 </p>
                 {/* Format the date */}
-                <p className={styles.expenseDate}>{formatDate(expense.date)}</p>
               </div>
-              <div className={styles.expenseAmount}>{`₹${expense.price}`}</div>
+
               <div className={styles.expenseActions}>
+                <div
+                  className={styles.expenseAmount}
+                >{`₹${expense.price}`}</div>
                 <TiDeleteOutline
                   className={styles.deleteIcon}
                   onClick={() => handleDelete(index)}
                 />
-                <MdOutlineModeEdit className={styles.editIcon} />
+                <MdOutlineModeEdit
+                  className={styles.editIcon}
+                  onClick={handleEdit}
+                />
               </div>
             </div>
           ))}

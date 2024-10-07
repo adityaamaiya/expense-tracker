@@ -4,5 +4,12 @@
   background: #ffffff;
   box-shadow: 0px 4px 4px 0px #00000040;
   border-radius: 10px;
-margin-left: 20px;
+}
+.topDiv {
+  width: 40%;
+}
+@media (max-width: 768px) {
+  .topDiv {
+    width: 100%;
+  }
 }

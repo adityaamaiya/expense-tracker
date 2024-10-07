@@ -1,43 +1,58 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import styles from './Modal.module.css';
+import React, { useState } from "react";
+import Modal from "react-modal";
+import styles from "./AddExpensesModal.module.css";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
-export default function ExpenseModal({ isOpen, onClose, onAddExpense }) {
-  const [title, setTitle] = useState('');
-  const [price, setPrice] = useState('');
-  const [date, setDate] = useState('');
-  const [category, setCategory] = useState('select');
+export default function ExpenseModal({
+  isOpen,
+  onClose,
+  onAddExpense,
+  heading,
+}) {
+  const [title, setTitle] = useState("");
+  const [price, setPrice] = useState("");
+  const [date, setDate] = useState("");
+  const [category, setCategory] = useState("select");
+  const [balance, setBalance] = useState(localStorage.getItem("balance"));
+
+  // const handleAddBalance = (e) => {
+  //   e.preventDefault();
+  //   const newBalance = balance ;
+  //   setBalance(newBalance);
+  //   localStorage.setItem("balance", newBalance);
+  //   setHeading("Add Balance");
+  //   setIsModalOpen(true);
+  // };
 
   const handleAddExpense = (e) => {
     e.preventDefault(); // Prevent form submission
-    
+
     // Validate fields
-    if (!title || !price || !date || category === 'select') {
-      alert('All fields are required!');
+    if (!title || !price || !date || category === "select") {
+      alert("All fields are required!");
       return;
     }
 
     const expenseData = { title, price, date, category };
-    console.log('Expense Data:', expenseData);
-    
+    console.log("Expense Data:", expenseData);
+
     // Step 1: Retrieve existing expenses from localStorage
-    const storedExpenses = localStorage.getItem('expensesArray');
-    let expensesArray = storedExpenses ? JSON.parse(storedExpenses) : [];  // Parse existing expenses or use an empty array
-    
+    const storedExpenses = localStorage.getItem("expensesArray");
+    let expensesArray = storedExpenses ? JSON.parse(storedExpenses) : []; // Parse existing expenses or use an empty array
+
     // Step 2: Append the new expense to the array
     expensesArray.push(expenseData);
-    
+
     // Step 3: Save the updated expenses array back to localStorage
-    localStorage.setItem('expensesArray', JSON.stringify(expensesArray));
-    
+    localStorage.setItem("expensesArray", JSON.stringify(expensesArray));
+
     // Step 4: Reset form fields to default values
-    setTitle('');
-    setPrice('');
-    setDate('');
-    setCategory('select');
-    
+    setTitle("");
+    setPrice("");
+    setDate("");
+    setCategory("select");
+
     // Step 5: Continue with any additional actions
     onAddExpense(expenseData);
     onClose();
@@ -51,7 +66,7 @@ export default function ExpenseModal({ isOpen, onClose, onAddExpense }) {
       className={styles.modal}
       overlayClassName={styles.overlay}
     >
-      <h2 className={styles.modalTitle}>Add Expenses</h2>
+      <h2 className={styles.modalTitle}>{heading}</h2>
       <form onSubmit={handleAddExpense}>
         <div>
           <input

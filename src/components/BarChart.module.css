@@ -1,44 +1,40 @@
 .chartContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  }
-  
-  .barChart {
- 
-    border-radius: 8px !important;
-    padding: 20px;
-   
-  }
-  
-  .bar {
-    border-radius: 20px; /* Rounded bars */
-    height: 12px; /* Custom height for bars */
-  }
-  
-  .barChart .recharts-bar-rectangle {
-    border-radius: 8px; /* Further round the bar corners */
-  }
-  
-  .xAxis, .yAxis {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333; /* Darker font for axis labels */
-  }
-  
-  .yAxis text {
-    fill: #000000;
-  }
-  
-  .tooltip {
-    background-color: #ffffff;
-    border: 1px solid #d0d0d0;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #555555;
-  }
-  
-  
+.barChart {
+  border-radius: 8px !important;
+  padding: 20px;
+}
+
+.bar {
+  border-radius: 20px; /* Rounded bars */
+  height: 12px; /* Custom height for bars */
+}
+
+.barChart .recharts-bar-rectangle {
+  border-radius: 8px; /* Further round the bar corners */
+}
+
+.xAxis,
+.yAxis {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333; /* Darker font for axis labels */
+}
+
+.yAxis text {
+  fill: #000000;
+}
+
+.tooltip {
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #555555;
+}

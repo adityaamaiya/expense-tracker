@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Card from "./components/Card";
 import Chart from "./components/Chart";
-import Modal from "./components/Modal";
+import ExpenseModal from "./components/Modals/AddExpensesModal";
 import "./App.css";
 import RecentTransactions from "./components/RecentTransactions";
 import TopTransactions from "./components/TopTransactions";
+import BalanceModal from "./components/Modals/BalanceModal";
 
 function App() {
   const [balance, setBalance] = useState(() => {
     const savedBalance = localStorage.getItem("balance");
     return savedBalance ? parseInt(savedBalance, 10) : 5000;
   });
+
+  const [heading, setHeading] = useState("Add Expense");
   const [totalExpenses, setTotalExpenses] = useState(() => {
     const savedExpense = localStorage.getItem("totalExpense");
     return savedExpense ? parseInt(savedExpense, 10) : 0;
@@ -20,7 +23,8 @@ function App() {
     return savedExpenses ? JSON.parse(savedExpenses) : [];
   });
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExpenseModalOpen, setExpenseModalOpen] = useState(false);
+  const [isBalanceModalOpen, setBalanceModalOpen] = useState(false);
 
   const handleAddExpense = (expenseData) => {
     const { price } = expenseData;
@@ -41,10 +45,11 @@ function App() {
     localStorage.setItem("expensesArray", JSON.stringify(updatedExpensesArray));
   };
 
-  const handleAddIncome = () => {
-    const newBalance = balance + 100;
+  const handleAddIncome = (incomeAmount) => {
+    const newBalance = balance + incomeAmount;
     setBalance(newBalance);
-    localStorage.setItem("balance", newBalance);
+    localStorage.setItem("balance", newBalance); // Save new balance
+    setBalanceModalOpen(false); // Close the modal
   };
 
   const handleDeleteExpense = (index) => {
@@ -66,6 +71,9 @@ function App() {
     console.log("Balance changed:", balance);
     console.log("Total expenses changed:", totalExpenses);
     console.log("Expenses array:", expensesArray);
+    
+      
+   
   }, [balance, totalExpenses, expensesArray]);
 
   return (
@@ -86,33 +94,44 @@ function App() {
           name="Wallet balance"
           amount={balance}
           buttonText="+ Add Income"
-          onClick={handleAddIncome}
+          onClick={() => setBalanceModalOpen(true)}
         />
         <Card
           name="Expenses"
           amount={totalExpenses}
           buttonText="+ Add Expense"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            setExpenseModalOpen(true);
+            setHeading("Add Expense");
+          }}
         />
         <div className="chart">
-        <Chart expenses={expensesArray} />
-        {/* <span className="food"></span>
-        <span>food</span> */}
-      
-        
-        
+          <Chart expenses={expensesArray} />
+        </div>
       </div>
-      </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+      <ExpenseModal
+        isOpen={isExpenseModalOpen}
+        onClose={() => setExpenseModalOpen(false)}
         onAddExpense={handleAddExpense}
+        heading={heading}
       />
       <div className="footer">
-        {/* Pass the expensesArray to RecentTransactions */}
-         <RecentTransactions expenses={expensesArray} onDeleteExpense={handleDeleteExpense} />
+        <RecentTransactions
+          expenses={expensesArray.sort((a, b) => new Date(b.date) - new Date(a.date))}
+          onDeleteExpense={handleDeleteExpense}
+          handleEdit={() => {
+            setHeading("Edit Expenses");
+            setExpenseModalOpen(true);
+          }}
+        />
 
-        <TopTransactions expenses={expensesArray}/>
+        <TopTransactions expenses={expensesArray} />
+        <BalanceModal
+          isOpen={isBalanceModalOpen}
+          onClose={() => setBalanceModalOpen(false)}
+          onAddBalance={handleAddIncome}
+          heading="Add Balance"
+        />
       </div>
     </div>
   );

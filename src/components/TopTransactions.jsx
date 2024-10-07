@@ -4,7 +4,7 @@ import CategoryBarChart from "./BarChart";
 
 export default function TopTransactions({ expenses }) {
   return (
-    <div>
+    <div className={styles.topDiv}>
       <p
         style={{
           color: "white",
@@ -16,14 +16,12 @@ export default function TopTransactions({ expenses }) {
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
-          width: "600px",
         }}
       >
         Top Expenses
       </p>
       <div className={styles.top}>
-      <CategoryBarChart expenses={expenses} />
-
+        <CategoryBarChart expenses={expenses} />
       </div>
     </div>
   );
