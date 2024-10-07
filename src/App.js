@@ -11,7 +11,7 @@ import Pill from "./components/Pills/Pill";
 function App() {
   const [balance, setBalance] = useState(() => {
     const savedBalance = localStorage.getItem("balance");
-    return savedBalance ? parseInt(savedBalance, 10) : 0;
+    return savedBalance ? parseInt(savedBalance, 10) : 5000;
   });
 
   const [heading, setHeading] = useState("Add Expense");
