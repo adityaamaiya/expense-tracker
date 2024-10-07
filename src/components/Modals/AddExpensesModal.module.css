@@ -123,15 +123,14 @@ select.inputField {
 }
 
 @media (max-width: 768px) {
-  .modal{
+  .modal {
     height: max-content;
     width: max-content;
   }
-  form{
+  form {
     flex-direction: column;
   }
-  .addButton{
+  .addButton {
     width: 100% !important;
   }
 }
-

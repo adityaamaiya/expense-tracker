@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styles from "./AddExpensesModal.module.css";
 
@@ -34,12 +34,16 @@ export default function ExpenseModal({
 
   const handleAddExpense = (e) => {
     e.preventDefault();
-    if (!title || !price || !date || category === 'select') {
-      alert('All fields are required!');
+    if (!title || !price || !date || category === "select") {
+      alert("All fields are required!");
       return;
     }
     const expenseData = { title, price, date, category };
     onAddExpense(expenseData); // Call parent function to add or edit expense
+    setTitle("");
+    setPrice("");
+    setDate("");
+    setCategory("select");
   };
 
   return (

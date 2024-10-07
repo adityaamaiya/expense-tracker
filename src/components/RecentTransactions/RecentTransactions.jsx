@@ -12,8 +12,6 @@ export default function RecentTransactions({
 }) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  
-
   const expensesPerPage = 3;
 
   // Pagination logic
@@ -100,7 +98,7 @@ export default function RecentTransactions({
                 />
                 <MdOutlineModeEdit
                   className={styles.editIcon}
-                  onClick={() => handleEdit(expense,index)}
+                  onClick={() => handleEdit(expense, index)}
                 />
               </div>
             </div>

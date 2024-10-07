@@ -23,9 +23,8 @@
   flex-direction: column;
   align-items: center;
   width: 50%;
-
 }
-.pill-container{
+.pill-container {
   display: flex;
   flex-direction: row;
 }

@@ -18,10 +18,10 @@
   .recentDiv {
     width: 100%;
   }
-  .expenseItem{
+  .expenseItem {
     padding: 0 !important;
   }
-  .expenseAmount{
+  .expenseAmount {
     margin: 0 !important;
   }
 }
@@ -146,4 +146,3 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
-

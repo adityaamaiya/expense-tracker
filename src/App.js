@@ -63,6 +63,8 @@ function App() {
       );
     }
     setExpenseModalOpen(false); // Close the modal
+
+    setExpenseToEdit(null); // Clear the edit state on close
   };
 
   const openEditModal = (expense, index) => {
@@ -132,12 +134,11 @@ function App() {
         <div className="chart">
           <Chart expenses={expensesArray} />
           <div className="pill-container">
-          <Pill text="Food" color="#A000FF" />
-          <Pill text="Entertainment" color="#FF9304" />
-          <Pill text="Travel" color="#FDE006" />
+            <Pill text="Food" color="#A000FF" />
+            <Pill text="Entertainment" color="#FF9304" />
+            <Pill text="Travel" color="#FDE006" />
           </div>
         </div>
-        
       </div>
       <ExpenseModal
         isOpen={isExpenseModalOpen}

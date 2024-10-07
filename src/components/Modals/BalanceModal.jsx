@@ -47,7 +47,11 @@ export default function BalanceModal({
           <button type="submit" className={styles.addButton}>
             {heading}
           </button>
-          <button type="button" onClick={onClose} className={styles.cancelButton}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={styles.cancelButton}
+          >
             Cancel
           </button>
         </div>
