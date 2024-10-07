@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Card from "./components/Card";
-import Chart from "./components/Chart";
+import Card from "./components/Cards/Card";
+import Chart from "./components/PieChart/Chart";
 import ExpenseModal from "./components/Modals/AddExpensesModal";
 import "./App.css";
-import RecentTransactions from "./components/RecentTransactions";
-import TopTransactions from "./components/TopTransactions";
+import RecentTransactions from "./components/RecentTransactions/RecentTransactions";
+import TopTransactions from "./components/TopTransactions/TopTransactions";
 import BalanceModal from "./components/Modals/BalanceModal";
+import Pill from "./components/Pills/Pill";
 
 function App() {
   const [balance, setBalance] = useState(() => {
     const savedBalance = localStorage.getItem("balance");
-    return savedBalance ? parseInt(savedBalance, 10) : 5000;
+    return savedBalance ? parseInt(savedBalance, 10) : 0;
   });
 
   const [heading, setHeading] = useState("Add Expense");
@@ -25,24 +26,50 @@ function App() {
 
   const [isExpenseModalOpen, setExpenseModalOpen] = useState(false);
   const [isBalanceModalOpen, setBalanceModalOpen] = useState(false);
+  const [expenseToEdit, setExpenseToEdit] = useState(null); // Store expense to edit
+  const [editingIndex, setEditingIndex] = useState(null); // Store the index of the expense being edited
 
   const handleAddExpense = (expenseData) => {
-    const { price } = expenseData;
+    if (expenseToEdit !== null) {
+      // Update the existing expense if in edit mode
+      const updatedExpensesArray = [...expensesArray];
+      updatedExpensesArray[editingIndex] = expenseData; // Update the particular expense
+      setExpensesArray(updatedExpensesArray);
+      localStorage.setItem(
+        "expensesArray",
+        JSON.stringify(updatedExpensesArray)
+      );
 
-    // Update total expenses
-    const newTotalExpenses = totalExpenses + parseFloat(price);
-    setTotalExpenses(newTotalExpenses);
-    localStorage.setItem("totalExpense", newTotalExpenses);
+      setExpenseToEdit(null); // Clear after editing
+    } else {
+      const { price } = expenseData;
 
-    // Update balance
-    const newBalance = balance - parseFloat(price);
-    setBalance(newBalance);
-    localStorage.setItem("balance", newBalance);
+      // Update total expenses
+      const newTotalExpenses = totalExpenses + parseFloat(price);
+      setTotalExpenses(newTotalExpenses);
+      localStorage.setItem("totalExpense", newTotalExpenses);
 
-    // Add the new expense to the array and localStorage
-    const updatedExpensesArray = [...expensesArray, expenseData];
-    setExpensesArray(updatedExpensesArray);
-    localStorage.setItem("expensesArray", JSON.stringify(updatedExpensesArray));
+      // Update balance
+      const newBalance = balance - parseFloat(price);
+      setBalance(newBalance);
+      localStorage.setItem("balance", newBalance);
+
+      // Add the new expense to the array and localStorage
+      const updatedExpensesArray = [...expensesArray, expenseData];
+      setExpensesArray(updatedExpensesArray);
+      localStorage.setItem(
+        "expensesArray",
+        JSON.stringify(updatedExpensesArray)
+      );
+    }
+    setExpenseModalOpen(false); // Close the modal
+  };
+
+  const openEditModal = (expense, index) => {
+    setHeading("Edit Expense");
+    setExpenseToEdit(expense); // Pass the selected expense to be edited
+    setEditingIndex(index); // Store the index of the expense being edited
+    setExpenseModalOpen(true); // Open modal for editing
   };
 
   const handleAddIncome = (incomeAmount) => {
@@ -71,9 +98,6 @@ function App() {
     console.log("Balance changed:", balance);
     console.log("Total expenses changed:", totalExpenses);
     console.log("Expenses array:", expensesArray);
-    
-      
-   
   }, [balance, totalExpenses, expensesArray]);
 
   return (
@@ -107,22 +131,31 @@ function App() {
         />
         <div className="chart">
           <Chart expenses={expensesArray} />
+          <div className="pill-container">
+          <Pill text="Food" color="#A000FF" />
+          <Pill text="Entertainment" color="#FF9304" />
+          <Pill text="Travel" color="#FDE006" />
+          </div>
         </div>
+        
       </div>
       <ExpenseModal
         isOpen={isExpenseModalOpen}
-        onClose={() => setExpenseModalOpen(false)}
+        onClose={() => {
+          setExpenseModalOpen(false);
+          setExpenseToEdit(null); // Clear the edit state on close
+        }}
         onAddExpense={handleAddExpense}
         heading={heading}
+        expenseToEdit={expenseToEdit} // Pass the expense to edit
       />
       <div className="footer">
         <RecentTransactions
-          expenses={expensesArray.sort((a, b) => new Date(b.date) - new Date(a.date))}
+          expenses={expensesArray.sort(
+            (a, b) => new Date(b.date) - new Date(a.date)
+          )}
           onDeleteExpense={handleDeleteExpense}
-          handleEdit={() => {
-            setHeading("Edit Expenses");
-            setExpenseModalOpen(true);
-          }}
+          handleEdit={openEditModal} // Pass the function to open edit modal
         />
 
         <TopTransactions expenses={expensesArray} />

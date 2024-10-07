@@ -18,6 +18,12 @@
   .recentDiv {
     width: 100%;
   }
+  .expenseItem{
+    padding: 0 !important;
+  }
+  .expenseAmount{
+    margin: 0 !important;
+  }
 }
 
 .expenseDetails {
@@ -140,3 +146,4 @@
   background-color: #ccc;
   cursor: not-allowed;
 }
+

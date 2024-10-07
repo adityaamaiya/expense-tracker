@@ -121,3 +121,17 @@ select.inputField {
 .cancelButton:hover {
   background-color: #bdbdbd;
 }
+
+@media (max-width: 768px) {
+  .modal{
+    height: max-content;
+    width: max-content;
+  }
+  form{
+    flex-direction: column;
+  }
+  .addButton{
+    width: 100% !important;
+  }
+}
+

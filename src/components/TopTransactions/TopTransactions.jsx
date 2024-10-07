@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./TopTransactions.module.css";
-import CategoryBarChart from "./BarChart";
+import CategoryBarChart from "../BarChart/BarChart";
 
 export default function TopTransactions({ expenses }) {
   return (

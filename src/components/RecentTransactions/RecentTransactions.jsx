@@ -100,7 +100,7 @@ export default function RecentTransactions({
                 />
                 <MdOutlineModeEdit
                   className={styles.editIcon}
-                  onClick={handleEdit}
+                  onClick={() => handleEdit(expense,index)}
                 />
               </div>
             </div>

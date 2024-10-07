@@ -4,8 +4,6 @@ import {
   Bar,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
   ResponsiveContainer,
 } from "recharts";
 import styles from "./BarChart.module.css";
@@ -48,14 +46,22 @@ const CategoryBarChart = ({ expenses }) => {
           className={styles.barChart}
           margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
         >
+          {/* Hide axis lines and ticks */}
           <XAxis type="number" hide />
-          <YAxis dataKey="name" type="category" className={styles.yAxis} />
+          <YAxis
+            dataKey="name"
+            type="category"
+            className={styles.yAxis}
+            axisLine={false} // Hide the axis line
+            tickLine={false} // Hide the tick line
+          />
 
+          {/* Use the radius prop to create rounded corners */}
           <Bar
             dataKey="value"
             fill="#8884d8"
             barSize={20}
-            className={styles.bar}
+            radius={[0, 20, 20, 0]} // Rounded corners
           />
         </BarChart>
       </ResponsiveContainer>

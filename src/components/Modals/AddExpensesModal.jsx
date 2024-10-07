@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Modal from "react-modal";
 import styles from "./AddExpensesModal.module.css";
 
@@ -9,53 +9,37 @@ export default function ExpenseModal({
   onClose,
   onAddExpense,
   heading,
+  expenseToEdit, // This prop is passed when editing an expense
 }) {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [category, setCategory] = useState("select");
-  const [balance, setBalance] = useState(localStorage.getItem("balance"));
 
-  // const handleAddBalance = (e) => {
-  //   e.preventDefault();
-  //   const newBalance = balance ;
-  //   setBalance(newBalance);
-  //   localStorage.setItem("balance", newBalance);
-  //   setHeading("Add Balance");
-  //   setIsModalOpen(true);
-  // };
+  // If editing, pre-fill the form with existing expense data
+  useEffect(() => {
+    if (expenseToEdit) {
+      setTitle(expenseToEdit.title);
+      setPrice(expenseToEdit.price);
+      setDate(expenseToEdit.date);
+      setCategory(expenseToEdit.category);
+    } else {
+      // Reset the form if no expense is being edited
+      setTitle("");
+      setPrice("");
+      setDate("");
+      setCategory("select");
+    }
+  }, [expenseToEdit]);
 
   const handleAddExpense = (e) => {
-    e.preventDefault(); // Prevent form submission
-
-    // Validate fields
-    if (!title || !price || !date || category === "select") {
-      alert("All fields are required!");
+    e.preventDefault();
+    if (!title || !price || !date || category === 'select') {
+      alert('All fields are required!');
       return;
     }
-
     const expenseData = { title, price, date, category };
-    console.log("Expense Data:", expenseData);
-
-    // Step 1: Retrieve existing expenses from localStorage
-    const storedExpenses = localStorage.getItem("expensesArray");
-    let expensesArray = storedExpenses ? JSON.parse(storedExpenses) : []; // Parse existing expenses or use an empty array
-
-    // Step 2: Append the new expense to the array
-    expensesArray.push(expenseData);
-
-    // Step 3: Save the updated expenses array back to localStorage
-    localStorage.setItem("expensesArray", JSON.stringify(expensesArray));
-
-    // Step 4: Reset form fields to default values
-    setTitle("");
-    setPrice("");
-    setDate("");
-    setCategory("select");
-
-    // Step 5: Continue with any additional actions
-    onAddExpense(expenseData);
-    onClose();
+    onAddExpense(expenseData); // Call parent function to add or edit expense
   };
 
   return (
@@ -96,6 +80,7 @@ export default function ExpenseModal({
             onChange={(e) => setCategory(e.target.value)}
             className={styles.inputField}
             required={true}
+            defaultValue="select"
           >
             <option value="select">Select Category</option>
             <option value="food">Food</option>
