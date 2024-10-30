@@ -30,26 +30,32 @@ function App() {
   const [editingIndex, setEditingIndex] = useState(null); // Store the index of the expense being edited
 
   const handleAddExpense = (expenseData) => {
+    const { price } = expenseData;
+
+    // Check if expense is within the available balance
+    if (parseFloat(price) > balance) {
+      alert(
+        "Insufficient balance! You cannot add an expense that exceeds the current balance."
+      );
+      return; // Exit function if balance is insufficient
+    }
+
     if (expenseToEdit !== null) {
       // Update the existing expense if in edit mode
       const updatedExpensesArray = [...expensesArray];
-      updatedExpensesArray[editingIndex] = expenseData; // Update the particular expense
+      updatedExpensesArray[editingIndex] = expenseData;
       setExpensesArray(updatedExpensesArray);
       localStorage.setItem(
         "expensesArray",
         JSON.stringify(updatedExpensesArray)
       );
-
-      setExpenseToEdit(null); // Clear after editing
+      setExpenseToEdit(null);
     } else {
-      const { price } = expenseData;
-
-      // Update total expenses
+      // Update total expenses and balance
       const newTotalExpenses = totalExpenses + parseFloat(price);
       setTotalExpenses(newTotalExpenses);
       localStorage.setItem("totalExpense", newTotalExpenses);
 
-      // Update balance
       const newBalance = balance - parseFloat(price);
       setBalance(newBalance);
       localStorage.setItem("balance", newBalance);
@@ -62,9 +68,9 @@ function App() {
         JSON.stringify(updatedExpensesArray)
       );
     }
-    setExpenseModalOpen(false); // Close the modal
 
-    setExpenseToEdit(null); // Clear the edit state on close
+    setExpenseModalOpen(false);
+    setExpenseToEdit(null);
   };
 
   const openEditModal = (expense, index) => {
@@ -82,18 +88,27 @@ function App() {
   };
 
   const handleDeleteExpense = (index) => {
+    // Get the expense to delete
+    const expenseToDelete = expensesArray[index];
+
+    // Create an updated array without the deleted expense
     const updatedExpenses = [...expensesArray];
     updatedExpenses.splice(index, 1);
     setExpensesArray(updatedExpenses);
     localStorage.setItem("expensesArray", JSON.stringify(updatedExpenses));
 
-    // Optionally, you may also want to update the total expenses and balance.
+    // Update total expenses after deletion
     const totalExpense = updatedExpenses.reduce(
       (acc, expense) => acc + parseFloat(expense.price),
       0
     );
     setTotalExpenses(totalExpense);
     localStorage.setItem("totalExpense", totalExpense);
+
+    // Add the deleted expense's price back to the balance
+    const newBalance = balance + parseFloat(expenseToDelete.price);
+    setBalance(newBalance);
+    localStorage.setItem("balance", newBalance);
   };
 
   useEffect(() => {
